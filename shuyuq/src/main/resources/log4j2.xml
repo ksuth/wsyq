@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="MyApp" packages="">
+	<Properties>
+        <Property name="baseDir">/logtest</Property>
+    </Properties>
+  <Appenders>
+  	 <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d %p [%c] [%M] [Line:%L] - &lt;%m&gt;}%n"/>
+        </Console>
+    <RollingFile name="RollingFile" fileName="${baseDir}/logs/app.log"
+                 filePattern="${baseDir}/logs/app-%d{MM-dd-yyyy}.log.gz">
+      <RegexFilter regex=".*password.*" onMatch="ACCEPT" onMismatch="DENY"/>
+      <PatternLayout>
+        <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+      </PatternLayout>
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+  	<AsyncLogger name="test.log.shuyuq" level="debug" additivity="false" includeLocation="true">
+    	<AppenderRef ref="RollingFile"/>
+    </AsyncLogger>
+    <AsyncRoot level="info">
+      <AppenderRef ref="console"/>
+    </AsyncRoot>
+  </Loggers>
+</Configuration>
